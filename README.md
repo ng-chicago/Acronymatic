@@ -1,4 +1,4 @@
-# AngularBasePWA
+# Acronymatic
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.0.
 
@@ -30,8 +30,8 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## Creation steps 05/30/2019 1:53 PM
 
 ### Create new app with CLI
-    ng new AngularBasePWA  --routing=true  
-    cd AngularBasePWA  
+    ng new Acronymatic  --routing=true  
+    cd Acronymatic  
 
 ### Add PWA stuff
     ng add @angular/pwa  
@@ -40,13 +40,13 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
     ng update
 
 ### Modify distribution folder in _angular.json_ (personal preference)
-	old: "outputPath": "dist/AngularBasePWA",  
+	old: "outputPath": "dist/Acronymatic",  
 	new: "outputPath": "dist",  
 
 ## Bump up the Lighthouse score tweaks
 
 ### Add description meta data to _index.html_ page
-        <meta name="description" content="Base Angular PWA">  
+        <meta name="description" content="Acronymatic">  
         <meta name="keywords" content="Angular, PWA">  
 
 ### Update _manifest.json_ short_name
@@ -74,7 +74,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
     git status  
     git add -A  
     git commit -m "base app creation"  
-    git remote add origin https://github.com/ng-chicago/AngularBasePWA.git  
+    git remote add origin https://github.com/ng-chicago/Acronymatic.git  
     git push -u origin master  
 
 ### Notes  
@@ -87,7 +87,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 create new GitHub repository {PutNameHere}  
 mkdir {PutNameHere}  
 cd {PutNameHere}  
-git clone https://github.com/ng-chicago/AngularBasePWA.git .  
+git clone https://github.com/ng-chicago/Acronymatic.git .  
 git remote set-url origin https://github.com/ng-chicago/{PutNameHere}.git  
 git push -u origin master  
 npm install  

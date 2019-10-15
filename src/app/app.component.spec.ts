@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'AngularBasePWA'`, () => {
+  it(`should have as title 'Acronymatic'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('AngularBasePWA');
+    expect(app.title).toEqual('Acronymatic');
   });
 
   it('should render title in a h1 tag', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to AngularBasePWA!');
+    expect(compiled.querySelector('h1').textContent).toContain('Welcome to Acronymatic!');
   });
 });
