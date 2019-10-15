@@ -108,7 +108,8 @@ export class SpreadsheetDS {
     for (const i of dataReceived) {
       tempArray.push({
         Acronym: i.gsx$acronym.$t,
-        SpelledOut: i.gsx$spelledout.$t
+        SpelledOut: i.gsx$spelledout.$t,
+        MoreURL: i.gsx$moreurl.$t
       });
     }
     return tempArray;

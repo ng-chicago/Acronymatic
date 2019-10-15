@@ -1,29 +1,27 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { SearchComponent } from './search/search.component';
-import { SearchModule } from './search/search.module';
-import { QuizComponent } from './quiz/quiz.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { SpreadsheetDS } from './data/spreadsheet-data.service';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    SearchComponent,
-    QuizComponent
+    AppComponent
   ],
   imports: [
+    CoreModule,
     BrowserModule,
     AppRoutingModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    SearchModule,
-    BrowserAnimationsModule
+    HttpClientModule,
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
-  providers: [],
+  providers: [SpreadsheetDS],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
