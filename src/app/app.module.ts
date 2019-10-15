@@ -8,6 +8,7 @@ import { environment } from '../environments/environment';
 import { SearchComponent } from './search/search.component';
 import { SearchModule } from './search/search.module';
 import { QuizComponent } from './quiz/quiz.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { QuizComponent } from './quiz/quiz.component';
     BrowserModule,
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    SearchModule
+    SearchModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
