@@ -1,13 +1,16 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { SharedModule } from '../shared.module';
 
+import { QuizComponent } from './quiz.component';
 import { QuizRoutingModule } from './quiz-routing.module';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    QuizComponent
+  ],
   imports: [
-    CommonModule,
-    QuizRoutingModule
+    QuizRoutingModule,
+    SharedModule
   ]
 })
 export class QuizModule { }

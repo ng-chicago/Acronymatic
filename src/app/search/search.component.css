@@ -1,0 +1,20 @@
+.container {
+    margin-left: 10px;
+}
+
+.search {
+    margin-left: 10px;
+}
+
+.acr {
+    font-weight: 900;
+    font-size: 120%;
+}
+
+td.mat-cell {
+    padding-right: 10px;
+}
+
+.mat-table {
+    width: 96%;
+}

@@ -7,11 +7,13 @@ import { AppRoutingModule } from '../app-routing.module';
 
 import { SpreadsheetDS } from '../data/spreadsheet-data.service';
 import { HeaderComponent } from './nav/header/header.component';
+import { SearchComponent } from '../search/search.component';
 
 @NgModule({
   declarations: [
     HomeComponent,
-    HeaderComponent
+    HeaderComponent,
+    SearchComponent
   ],
   imports: [
     SharedModule,
