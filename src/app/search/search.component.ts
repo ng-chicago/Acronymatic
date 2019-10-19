@@ -17,7 +17,7 @@ export interface TheAcronyms {
 export class SearchComponent implements OnInit {
 
   acronyms: MatTableDataSource<TheAcronyms>;
-  objName = 'CompTIASecurityPlus';
+  objName = 'ObjectMetaData_C';
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -46,22 +46,16 @@ export class SearchComponent implements OnInit {
   ngOnInit() {
     this.sds.compTIASecurityPlusUpdated.emit(
       // use the local storage if there until HTTP call retrieves something
-      JSON.parse(localStorage[this.sds.ssIDs.getCacheName(this.objName)] || '[]')
+      JSON.parse(localStorage[this.objName] || '[]')
     );
     this.acronyms.paginator = this.paginator;
   }
 
-  refreshData() {
-    this.sds.loadCompTIASecurityPlus(this.objName);
-  }
-
   applyFilter(filterValue: string) {
     this.acronyms.filter = filterValue.trim().toLowerCase();
-
     if (this.acronyms.paginator) {
       this.acronyms.paginator.firstPage();
     }
   }
 
 }
-

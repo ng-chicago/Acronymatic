@@ -1,27 +1,36 @@
 export class SpreadsheetIDs {
 
-  spreadsheetID = '1Q5nYcaWYc9pBo44_HzrN8V7MBmkHr5LYqr4x53dLV5M';
+  public static spreadsheetID = '1Q5nYcaWYc9pBo44_HzrN8V7MBmkHr5LYqr4x53dLV5M';
+  public static metaDataTabID = 'od6';
+  public static objectMetaData = [];
 
-  dataObjects =  [
-    { objName: 'AcronymSets', tabID: 'od6', cache: 'AcronymSetsCache', useYN: 'Y', labelName: 'Acronym Sets'},
-    { objName: 'CompTIASecurityPlus', tabID: 'otj0w48', cache: 'CompTIASecurityPlusCache', useYN: 'Y', labelName: 'CompTIA Security Plus'}
-  ];
   tabURLStart = 'https://spreadsheets.google.com/feeds/list/';
   allTabsURLStart = 'https://spreadsheets.google.com/feeds/worksheets/';
   urlEnd = '/public/full?alt=json';
 
-  getTabURL(whichTab: string ): string {
-    return this.tabURLStart + this.spreadsheetID + '/' +
-      this.dataObjects.find(myObj => myObj.objName === whichTab).tabID +
-      this.urlEnd;
+  buildTabURL(whichTab: string): string {
+    return this.tabURLStart + SpreadsheetIDs.spreadsheetID + '/' +
+      whichTab + this.urlEnd;
   }
-  getCacheName(whichTab: string ): string {
-    return this.dataObjects.find(myObj => myObj.objName === whichTab).cache;
-  }
-  getLabelName(whichTab: string ): string {
-    return this.dataObjects.find(myObj => myObj.objName === whichTab).labelName;
-  }
-  getAllTabsURL(): string {
-    return this.allTabsURLStart + this.spreadsheetID + this.urlEnd;
-  }
+  // getTabID(whichTab: string ): string {
+  //   return SpreadsheetIDs.objectMetaData.find(myObj => myObj.objName === whichTab).TabID;
+  // }
+  // getDataType(whichTab: string ): string {
+  //   return SpreadsheetIDs.objectMetaData.find(myObj => myObj.objName === whichTab).DataType;
+  // }
+  // getSetName(whichTab: string): string {
+  //   return SpreadsheetIDs.objectMetaData.find(myObj => myObj.objName === whichTab).SetName;
+  // }
+  // getObjectName(whichTab: string): string {
+  //   return SpreadsheetIDs.objectMetaData.find(myObj => myObj.objName === whichTab).ObjectName;
+  // }
+  // getCount(whichTab: string): string {
+  //   return SpreadsheetIDs.objectMetaData.find(myObj => myObj.objName === whichTab).Count;
+  // }
+
+  // getCacheName(): string {
+  //   return this.allTabsURLStart + SpreadsheetIDs.spreadsheetID + this.urlEnd;
+  // }
+
+
 }

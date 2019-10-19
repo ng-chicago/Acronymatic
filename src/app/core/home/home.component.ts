@@ -16,7 +16,7 @@ export class HomeComponent {
   constructor(public sds: SpreadsheetDS) {}
 
   refreshAll() {
-    this.sds.refreshAll();
+    this.sds.loadFreshData();
   }
 
 }
