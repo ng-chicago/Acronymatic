@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy,  ViewChild } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
 import { SpreadsheetDS } from '../data/spreadsheet-data.service';
@@ -14,10 +14,11 @@ export interface TheAcronyms {
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, OnDestroy {
 
   acronyms: MatTableDataSource<TheAcronyms>;
-  objName = 'ObjectMetaData_C';
+  objName = 'SY0501Acronyms';
+  cName = 'SearchComponent';
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -27,7 +28,9 @@ export class SearchComponent implements OnInit {
 
   constructor(public sds: SpreadsheetDS) {
 
-    this.sds.compTIASecurityPlusUpdated.subscribe(
+    console.log(this.cName + '.constructor');
+
+    this.sds.SY0501AcronymsUpdated.subscribe(
       (newData: any) => {
         this.acronyms = new MatTableDataSource(newData);
         this.acronyms.paginator = this.paginator;
@@ -44,11 +47,16 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.sds.compTIASecurityPlusUpdated.emit(
+    console.log(this.cName + '.ngOnInit');
+    this.sds.SY0501AcronymsUpdated.emit(
       // use the local storage if there until HTTP call retrieves something
       JSON.parse(localStorage[this.objName] || '[]')
-    );
+   );
     this.acronyms.paginator = this.paginator;
+  }
+  ngOnDestroy(): void {
+    // console.log(this.cName + '.ngOnDestroy stop listening');
+    console.log(this.cName + '.ngOnDestroy');
   }
 
   applyFilter(filterValue: string) {
@@ -57,5 +65,7 @@ export class SearchComponent implements OnInit {
       this.acronyms.paginator.firstPage();
     }
   }
+
+
 
 }

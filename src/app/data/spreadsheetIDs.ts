@@ -4,6 +4,13 @@ export class SpreadsheetIDs {
   public static metaDataTabID = 'od6';
   public static objectMetaData = [];
 
+  sheetTabs = [
+    { ObjectName: 'SY0501Acronyms',  TabID: 'otj0w48', DataType: 'AcronymSet', SetName: 'CompTIA Security+ (SY0-501) Acronyms'},
+    { ObjectName: 'TechWords', TabID: 'oy93aqx', DataType: 'AdditionalWords', SetName: 'Technology Words'},
+    { ObjectName: 'CrazyWords', TabID: 'oew6e8w', DataType: 'AdditionalWords', SetName: 'Crazy Words' },
+    { ObjectName: 'InsuranceAcronyms', TabID: 'o75ro3o', DataType: 'AcronymSet', SetName: 'Insurance Acronyms' }
+  ];
+
   tabURLStart = 'https://spreadsheets.google.com/feeds/list/';
   allTabsURLStart = 'https://spreadsheets.google.com/feeds/worksheets/';
   urlEnd = '/public/full?alt=json';
@@ -12,25 +19,11 @@ export class SpreadsheetIDs {
     return this.tabURLStart + SpreadsheetIDs.spreadsheetID + '/' +
       whichTab + this.urlEnd;
   }
-  // getTabID(whichTab: string ): string {
-  //   return SpreadsheetIDs.objectMetaData.find(myObj => myObj.objName === whichTab).TabID;
-  // }
-  // getDataType(whichTab: string ): string {
-  //   return SpreadsheetIDs.objectMetaData.find(myObj => myObj.objName === whichTab).DataType;
-  // }
-  // getSetName(whichTab: string): string {
-  //   return SpreadsheetIDs.objectMetaData.find(myObj => myObj.objName === whichTab).SetName;
-  // }
-  // getObjectName(whichTab: string): string {
-  //   return SpreadsheetIDs.objectMetaData.find(myObj => myObj.objName === whichTab).ObjectName;
-  // }
-  // getCount(whichTab: string): string {
-  //   return SpreadsheetIDs.objectMetaData.find(myObj => myObj.objName === whichTab).Count;
-  // }
 
-  // getCacheName(): string {
-  //   return this.allTabsURLStart + SpreadsheetIDs.spreadsheetID + this.urlEnd;
-  // }
+  getTabID(ObjectName: string): string {
+    return this.sheetTabs.find(myObj => myObj.ObjectName === ObjectName).TabID;
+  }
+
 
 
 }

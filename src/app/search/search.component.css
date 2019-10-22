@@ -11,6 +11,13 @@
     font-size: 120%;
 }
 
+.index {
+    font-weight: 400;
+    font-size: 75%;
+    color: dimgrey;
+    margin-left: 10px;
+}
+
 td.mat-cell {
     padding-right: 10px;
 }

@@ -7,21 +7,42 @@ import { SpreadsheetIDs } from './spreadsheetIDs';
 @Injectable()
 export class SpreadsheetDS {
 
-  ssIDs: SpreadsheetIDs = new SpreadsheetIDs;
+  cName = 'SpreadsheetDS';
+
+  ssIDs: SpreadsheetIDs = new SpreadsheetIDs();
   lastUpdated = new Date();
   // refreshHowOften = (36e5 * 6); // 6 hours
 
   objectMetaData$: Observable<Array<any>>;
-  oneTab$: Observable<Array<any>>;
-  compTIASecurityPlusUpdated = new EventEmitter<Array<any>>();
+  // oneTab$: Observable<Array<any>>;
+
+  SY0501Acronyms = 'SY0501Acronyms';
+  TechWords = 'TechWords';
+  CrazyWords = 'CrazyWords';
+  InsuranceAcronyms = 'InsuranceAcronyms';
+
+  SY0501Acronyms$: Observable<Array<any>>;
+  TechWords$: Observable<Array<any>>;
+  CrazyWords$: Observable<Array<any>>;
+  InsuranceAcronyms$: Observable<Array<any>>;
+
+  SY0501AcronymsUpdated = new EventEmitter<Array<any>>();
+  TechWordsUpdated = new EventEmitter<Array<any>>();
+  CrazyWordsUpdated = new EventEmitter<Array<any>>();
+  InsuranceAcronymsUpdated = new EventEmitter<Array<any>>();
+  allTabsLoaded = new EventEmitter<boolean>();
+
   uniqueWords: Array<any> = [];
+
 
   constructor(public http: HttpClient) {
     // initial load
+    console.log(this.cName + '.constructor');
     this.loadFreshData();
   }
 
   public static setLocal(whatData: any, cacheName: string) {
+
     localStorage[cacheName] = JSON.stringify(whatData);
   }
 
@@ -30,22 +51,87 @@ export class SpreadsheetDS {
   }
 
   loadFreshData() {
-    console.log('Loading MetaDataTab');
-    this.objectMetaData$ = this.getHTTPData_SS(SpreadsheetIDs.metaDataTabID);
-    this.objectMetaData$.subscribe(next => {
+    console.log(this.cName + '.loadFreshData');
+    this.loadSY0501Acronyms();
+    this.loadInsuranceAcronyms();
+    this.loadTechWords();
+  }
+
+  loadSY0501Acronyms() {
+    const whichObject = this.SY0501Acronyms;
+    console.log('Loading ' + whichObject);
+    const oneTabLocal: Array<any> = [];
+    this.SY0501Acronyms$ = this.getHTTPData_SS(this.ssIDs.getTabID(whichObject));
+    this.SY0501Acronyms$.subscribe(next => {
       if (next != null) {
         for (const i of next) {
-          SpreadsheetIDs.objectMetaData.push({
-            TabID: i.gsx$tabid.$t,
-            DataType: i.gsx$datatype.$t,
-            SetName: i.gsx$setname.$t,
-            ObjectName: i.gsx$objectname.$t,
-            Count: i.gsx$count.$t
+          oneTabLocal.push({
+            Acronym: i.gsx$acronym.$t,
+            Index: i.gsx$index.$t,
+            SpelledOut: i.gsx$spelledout.$t,
+            MoreURL: i.gsx$moreurl.$t
           });
         }
-        // load into local cache
-        SpreadsheetDS.setLocal(SpreadsheetIDs.objectMetaData, 'ObjectMetaData_C');
-        this.loadDataTabs();
+        SpreadsheetDS.setLocal(oneTabLocal, whichObject);
+        this.SY0501AcronymsUpdated.emit(oneTabLocal);
+      }
+    });
+  }
+
+  loadInsuranceAcronyms() {
+    const whichObject = this.InsuranceAcronyms;
+    console.log('Loading ' + whichObject);
+    const oneTabLocal: Array<any> = [];
+    this.SY0501Acronyms$ = this.getHTTPData_SS(this.ssIDs.getTabID(whichObject));
+    this.SY0501Acronyms$.subscribe(next => {
+      if (next != null) {
+        for (const i of next) {
+          oneTabLocal.push({
+            Acronym: i.gsx$acronym.$t,
+            Index: i.gsx$index.$t,
+            SpelledOut: i.gsx$spelledout.$t,
+            MoreURL: i.gsx$moreurl.$t
+          });
+        }
+        SpreadsheetDS.setLocal(oneTabLocal, whichObject);
+        this.InsuranceAcronymsUpdated.emit(oneTabLocal);
+      }
+    });
+  }
+
+  loadTechWords() {
+    const whichObject = this.TechWords;
+    console.log('Loading ' + whichObject);
+    const oneTabLocal: Array<any> = [];
+    this.SY0501Acronyms$ = this.getHTTPData_SS(this.ssIDs.getTabID(whichObject));
+    this.SY0501Acronyms$.subscribe(next => {
+      if (next != null) {
+        for (const i of next) {
+          oneTabLocal.push({
+            Word: i.gsx$word.$t,
+            Description: i.gsx$description.$t
+          });
+        }
+        SpreadsheetDS.setLocal(oneTabLocal, whichObject);
+        this.TechWordsUpdated.emit(oneTabLocal);
+      }
+    });
+  }
+  loadCrazyWords() {
+    const whichObject = this.CrazyWords;
+    console.log('Loading ' + whichObject);
+    const oneTabLocal: Array<any> = [];
+    this.SY0501Acronyms$ = this.getHTTPData_SS(this.ssIDs.getTabID(whichObject));
+    this.SY0501Acronyms$.subscribe(next => {
+      if (next != null) {
+        for (const i of next) {
+          oneTabLocal.push({
+            Word: i.gsx$word.$t,
+            Description: i.gsx$description.$t
+          });
+        }
+        SpreadsheetDS.setLocal(oneTabLocal, whichObject);
+        this.CrazyWordsUpdated.emit(oneTabLocal);
       }
     });
   }
@@ -54,42 +140,10 @@ export class SpreadsheetDS {
     for (const i of SpreadsheetIDs.objectMetaData) {
       if (i.DataType !== 'None') {
         console.log('Loading ' + i.ObjectName);
-        this.loadOneTab(i.TabID, i.DataType, i.ObjectName);
+        // this.loadOneTab(i.TabID, i.DataType, i.ObjectName);
       }
     }
     this.lastUpdated = new Date();
-  }
-
-  loadOneTab(tabID: string, dataType: string, objectName: string) {
-    const oneTabLocal: Array<any> = [];
-    this.oneTab$ = this.getHTTPData_SS(tabID);
-    this.oneTab$.subscribe(next => {
-      if (next != null) {
-        for (const i of next) {
-          if (dataType === 'AcronymSet') {
-            oneTabLocal.push({
-              Acronym: i.gsx$acronym.$t,
-              SpelledOut: i.gsx$spelledout.$t,
-              MoreURL: i.gsx$moreurl.$t
-            });
-          } else if (dataType === 'AdditionalWords') {
-            oneTabLocal.push({
-              Word: i.gsx$word.$t,
-              Description: i.gsx$description.$t
-            });
-          }
-        }
-        SpreadsheetDS.setLocal(oneTabLocal, objectName + '_C');
-
-        // TODO Hardcode Fix
-        if (objectName === 'SY0501Acronyms') {
-          this.compTIASecurityPlusUpdated.emit(oneTabLocal);
-        }
-
-        // TODO Set dynamic tab data here?
-
-      }
-    });
   }
 
   getHTTPData_SS(whatTab: string): Observable<Array<any>> {
@@ -112,7 +166,7 @@ export class SpreadsheetDS {
     this.uniqueWords = Array.from(new Set(tempWordsList));
 
     // save it in the local cache
-    SpreadsheetDS.setLocal(this.uniqueWords.sort(), 'UniqueWordsCache_C');
+    SpreadsheetDS.setLocal(this.uniqueWords.sort(), 'UniqueWordsCache');
 
     // console.log('All Words:' + tempWordsList.length);
     // console.log('Unique Words:' + this.uniqueWords.length);
@@ -125,37 +179,37 @@ export class SpreadsheetDS {
   }
   wordThatStartsWith(whichLetter: string) {
     const startsWith = this.uniqueWords.filter((word) => word.toLowerCase().startsWith(whichLetter.toLowerCase()));
-    //const startsWith = this.uniqueWords.filter((whichLetter) => whichLetter.toLowerCase().startsWith(e.target.value.toLowerCase())
-    //console.log(startsWith);
+    // const startsWith = this.uniqueWords.filter((whichLetter) => whichLetter.toLowerCase().startsWith(e.target.value.toLowerCase())
+    // console.log(startsWith);
     console.log(startsWith[Math.floor(Math.random() * startsWith.length)]);
   }
-  buildQuizArray() {
+  buildQuizArray(whichItem: string) {
     /*
     Get 10 random acronyms from cached answers ('CompTIASecurityPlusCache')
-      Exclude known items list
+
+    // TODO: Exclude items learnt from list to extract before building list
     Loop through all 10
       Add onto each 3 fake answers
       Using each letter to look up list
 
     */
-    const whichItem = 'CompTIASecurityPlusCache';
+    // const whichItem = 'SY0501Acronyms';
+
     console.log(this.getRandomArrayItems(JSON.parse(localStorage[whichItem]), 10));
   }
   getRandomArrayItems(arr: Array<any>, n: number) {
-  let result = new Array(n),
-    len = arr.length,
-    taken = new Array(len);
-  if (n > len)
-    throw new RangeError("getRandom: more elements taken than available");
-  while (n--) {
-    var x = Math.floor(Math.random() * len);
-    result[n] = arr[x in taken ? taken[x] : x];
-    taken[x] = --len in taken ? taken[len] : len;
-  }
-  return result;
-  }
-  buildQuiz() {
-
+    const result = new Array(n);
+    let len = arr.length;
+    const taken = new Array(len);
+    if (n > len) {
+      throw new RangeError('getRandom: more elements taken than available');
+    }
+    while (n--) {
+      const x = Math.floor(Math.random() * len);
+      result[n] = arr[x in taken ? taken[x] : x];
+      taken[x] = --len in taken ? taken[len] : len;
+    }
+    return result;
   }
 
 }

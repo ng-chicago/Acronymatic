@@ -9,6 +9,7 @@ import { environment } from '../environments/environment';
 
 import { SpreadsheetDS } from './data/spreadsheet-data.service';
 import { CoreModule } from './core/core.module';
+import { MaterialModule } from './material.module';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { CoreModule } from './core/core.module';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    MaterialModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [SpreadsheetDS],

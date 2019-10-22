@@ -10,8 +10,9 @@
 
     <!-- Name Column -->
     <ng-container matColumnDef="Name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Acronym</th>
-      <td mat-cell *matCellDef="let record" class="acr"> {{record.Acronym}} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Acronym
+      </th>
+      <td mat-cell *matCellDef="let record" class="acr" nowrap>{{record.Acronym}}<span *ngIf="record.Index" class='index' >({{record.Index}})</span></td>
     </ng-container>
     <!-- SpelledOut Column -->
     <ng-container matColumnDef="SpelledOut">
@@ -23,12 +24,9 @@
       </span>
       <span *ngIf="!record.MoreURL">{{record.SpelledOut}}</span>
        
-       
-       
        </td>
     </ng-container>
     <!-- MoreURL Column -->
-
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

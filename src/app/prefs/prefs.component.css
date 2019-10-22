@@ -1,0 +1,4 @@
+.outerCard {
+    margin: 10px 0 0 10px;
+    width: calc( 330px + (510 - 330) * (100vw - 400px) / (1400 - 400));
+}
