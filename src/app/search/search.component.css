@@ -32,3 +32,18 @@ table.pg {
     max-width: 600px;
     border-color: white;
 }
+
+tr.mat-header-row {
+    height: 40px;
+}
+
+tr.mat-footer-row,
+tr.mat-row {
+    height: 44px;
+}
+
+.mat-header-cell {
+    color: rgba(0, 0, 0, .75);
+    font-size: 14px;
+    font-weight: 700;
+}

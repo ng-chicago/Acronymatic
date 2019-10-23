@@ -27,9 +27,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['Name', 'SpelledOut'];
 
   constructor(public sds: SpreadsheetDS) {
-
-    console.log(this.cName + '.constructor');
-
+    // console.log(this.cName + '.constructor');
     this.sds.SY0501AcronymsUpdated.subscribe(
       (newData: any) => {
         this.acronyms = new MatTableDataSource(newData);
@@ -47,7 +45,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log(this.cName + '.ngOnInit');
+    // console.log(this.cName + '.ngOnInit');
     this.sds.SY0501AcronymsUpdated.emit(
       // use the local storage if there until HTTP call retrieves something
       JSON.parse(localStorage[this.objName] || '[]')
@@ -56,7 +54,6 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     // console.log(this.cName + '.ngOnDestroy stop listening');
-    console.log(this.cName + '.ngOnDestroy');
   }
 
   applyFilter(filterValue: string) {

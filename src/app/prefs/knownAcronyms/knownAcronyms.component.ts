@@ -15,11 +15,12 @@ export class KnownAcronymsComponent implements OnInit, OnDestroy {
   private KnownAcronymsComponentSub: Subscription;
 
   constructor(private ups: UserPrefsService) {
+    console.log(this.cName + '.constructor');
     this.excludeKnownAcronyms = ups.excludeKnownAcronyms$.getValue();
   }
 
   ngOnInit() {
-    console.log(this.cName + '.ngOnDestroy start listening');
+    console.log(this.cName + '.ngOnInit start listening');
     this.KnownAcronymsComponentSub = this.ups.excludeKnownAcronyms$.subscribe(
       (newValue: boolean) => {
         this.excludeKnownAcronyms = newValue;

@@ -30,19 +30,17 @@ export class SpreadsheetDS {
   TechWordsUpdated = new EventEmitter<Array<any>>();
   CrazyWordsUpdated = new EventEmitter<Array<any>>();
   InsuranceAcronymsUpdated = new EventEmitter<Array<any>>();
+
   allTabsLoaded = new EventEmitter<boolean>();
 
   uniqueWords: Array<any> = [];
 
-
   constructor(public http: HttpClient) {
-    // initial load
-    console.log(this.cName + '.constructor');
+    // console.log(this.cName + '.constructor initial load');
     this.loadFreshData();
   }
 
   public static setLocal(whatData: any, cacheName: string) {
-
     localStorage[cacheName] = JSON.stringify(whatData);
   }
 
@@ -51,15 +49,16 @@ export class SpreadsheetDS {
   }
 
   loadFreshData() {
-    console.log(this.cName + '.loadFreshData');
+    // console.log(this.cName + '.loadFreshData');
     this.loadSY0501Acronyms();
     this.loadInsuranceAcronyms();
     this.loadTechWords();
+    this.loadCrazyWords();
   }
 
   loadSY0501Acronyms() {
+    // console.log(this.cName + '.loadSY0501Acronyms');
     const whichObject = this.SY0501Acronyms;
-    console.log('Loading ' + whichObject);
     const oneTabLocal: Array<any> = [];
     this.SY0501Acronyms$ = this.getHTTPData_SS(this.ssIDs.getTabID(whichObject));
     this.SY0501Acronyms$.subscribe(next => {
@@ -79,8 +78,8 @@ export class SpreadsheetDS {
   }
 
   loadInsuranceAcronyms() {
+    // console.log(this.cName + '.loadInsuranceAcronyms');
     const whichObject = this.InsuranceAcronyms;
-    console.log('Loading ' + whichObject);
     const oneTabLocal: Array<any> = [];
     this.SY0501Acronyms$ = this.getHTTPData_SS(this.ssIDs.getTabID(whichObject));
     this.SY0501Acronyms$.subscribe(next => {
@@ -100,8 +99,8 @@ export class SpreadsheetDS {
   }
 
   loadTechWords() {
+    // console.log(this.cName + '.loadTechWords');
     const whichObject = this.TechWords;
-    console.log('Loading ' + whichObject);
     const oneTabLocal: Array<any> = [];
     this.SY0501Acronyms$ = this.getHTTPData_SS(this.ssIDs.getTabID(whichObject));
     this.SY0501Acronyms$.subscribe(next => {
@@ -117,9 +116,10 @@ export class SpreadsheetDS {
       }
     });
   }
+
   loadCrazyWords() {
+    // console.log(this.cName + '.loadCrazyWords');
     const whichObject = this.CrazyWords;
-    console.log('Loading ' + whichObject);
     const oneTabLocal: Array<any> = [];
     this.SY0501Acronyms$ = this.getHTTPData_SS(this.ssIDs.getTabID(whichObject));
     this.SY0501Acronyms$.subscribe(next => {
@@ -136,18 +136,8 @@ export class SpreadsheetDS {
     });
   }
 
-  loadDataTabs() {
-    for (const i of SpreadsheetIDs.objectMetaData) {
-      if (i.DataType !== 'None') {
-        console.log('Loading ' + i.ObjectName);
-        // this.loadOneTab(i.TabID, i.DataType, i.ObjectName);
-      }
-    }
-    this.lastUpdated = new Date();
-  }
-
   getHTTPData_SS(whatTab: string): Observable<Array<any>> {
-    // console.log('Getting data from the ' + whatTab + ' spreadsheet tab');
+    // console.log(this.cName + ' Getting data from the ' + whatTab + ' spreadsheet tab');
     return this.http.get<any>(this.ssIDs.buildTabURL(whatTab))
       .pipe(map(obj => obj.feed.entry));
   }

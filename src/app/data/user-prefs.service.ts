@@ -4,10 +4,15 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class UserPrefsService {
 
+    cName = 'UserPrefsService';
+
     excludeKnownAcronyms$ = new BehaviorSubject(true);
     defaultExcludeKnownAcronyms = false;
     lsExcludeKnownAcronyms = 'ExcludeKnownAcronyms';
-    cName = 'UserPrefsService';
+
+    timesToLearnt$ = new BehaviorSubject(3);
+    defaultTimesToLearnt = 3;
+    lsTimesToLearnt = 'ExcludeKnownAcronyms';
 
     constructor() {
         console.log(this.cName + '.constructor');
@@ -15,19 +20,16 @@ export class UserPrefsService {
     }
 
     loadData() {
-
-        // use local strage values if available
-        const sValue = localStorage[this.lsExcludeKnownAcronyms] || '';
+        console.log(this.cName + '.loadData');
+        // use local storage values if available
+        let sValue = localStorage[this.lsExcludeKnownAcronyms] || '';
         if (sValue === '') {
-            // console.log('Setting DEFAULT Campus: ' + this.defaultCampus);
-            this.setExcludeKnownAcronyms(this.defaultExcludeKnownAcronyms);
-            // this.setSubject(this.defaultCampus);
-            // this.preferredCampus.next(sValue);
-        } else {
-            // console.log('Using EXISTING local storage Campus: ' + sValue);
+            sValue = this.defaultExcludeKnownAcronyms;
+            console.log('Using DEFAULT local storage Campus: ' + sValue);
             this.setExcludeKnownAcronyms(sValue);
-            // this.setSubject(sValue);
-            // this.preferredCampus.next(sValue);
+        } else {
+            console.log('Using EXISTING local storage Campus: ' + sValue);
+            this.setExcludeKnownAcronyms(sValue);
         }
     }
 
