@@ -3,6 +3,7 @@ import { Option } from './option';
 export class Acronym {
     acronymID: string;
     acronym: string;
+    acronymTypeId: number;
     index: string;
     moreURL: string;
     options: Option[];
@@ -10,13 +11,15 @@ export class Acronym {
 
     constructor(data: any) {
         data = data || {};
-        this.acronymID = data.Acronym + data.Index;
-        this.acronym = data.Acronym;
-        this.index = data.Index;
-        this.moreURL = data.MoreURL;
+        this.acronymID = data.acronym + data.index;
+        this.acronym = data.acronym;
+        this.acronymTypeId = data.acronymTypeId;
+        this.index = data.index;
+        this.moreURL = data.moreURL;
         this.options = [];
         data.options.forEach(o => {
             this.options.push(new Option(o));
         });
+        this.answered = data.answered;
     }
 }

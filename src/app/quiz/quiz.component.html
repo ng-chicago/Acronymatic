@@ -1,3 +1,84 @@
-<p>
-  quiz works!
-</p>
+
+
+<mat-card class="outerCard">
+  <mat-card-content>
+
+    <mat-form-field class="whichQuizDropdown">
+      <mat-label>Quiz Type</mat-label>
+      <mat-select  [(ngModel)]="quizObjName" (selectionChange)="changeQuiz()">
+        <mat-option *ngFor="let quiz of quizes" [value]="quiz.objName">{{quiz.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+
+  </mat-card-content>
+</mat-card>
+
+<div id="quiz">
+
+  <div *ngIf="mode=='quiz' && quiz">
+    <div *ngFor="let acronym of filteredAcronyms">
+      <div class="badge badge-info">Acronym {{pager.index + 1}} of {{pager.count}}</div>
+
+<div *ngIf="mode=='hideThis' && config.duration" class="badge badge-info float-right">Time: {{ellapsedTime}} / {{duration}}</div>
+      
+<h3 *ngIf="mode=='hideThis'" class="font-weight-normal">{{pager.index + 1}}.
+        <span [innerHTML]="acronym.acronym"></span>
+</h3>
+<div *ngIf="mode=='hideThis'" class="row text-left options">
+        <div class="col-6" *ngFor="let option of acronym.options">
+          <div class="option">
+            <label class="font-weight-normal" [attr.for]="option.id">
+              <input id="{{option.id}}" type="checkbox" [(ngModel)]="option.selected" (change)="onSelect(acronym, option)" /> {{option.spelledOut}}
+            </label>
+          </div>
+        </div>
+</div> 
+
+
+      <label id="radio-group-label">{{pager.index + 1}}. {{acronym.acronym}}</label>
+      <mat-radio-group class="radio-group" [(ngModel)]="optionChosen[pager.index]" (change)="onSelect2(acronym, pager.index)">
+        <mat-radio-button class="radio-button" *ngFor="let option of acronym.options" [value]="option.id">{{option.spelledOut}}</mat-radio-button>
+      </mat-radio-group>
+
+
+
+    </div>
+    <hr />
+    <div class="text-center">
+      <button class="btn btn-default" *ngIf="config.allowBack" (click)="goTo(0);">First</button>
+      <button class="btn btn-default" *ngIf="config.allowBack" (click)="goTo(pager.index - 1);">Prev</button>
+      <button class="btn btn-primary" (click)="goTo(pager.index + 1);">Next</button>
+      <button class="btn btn-default" *ngIf="config.allowBack" (click)="goTo(pager.count - 1);">Last</button>
+      <!--<pagination *ngIf="config.showPager" direction-links="false" total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" ng-change="pageChanged()"></pagination>-->
+    </div>
+  </div>
+
+  <div class="row text-center" *ngIf="mode=='review'">
+    <div class="col-4 cursor-pointer" *ngFor="let acronym of quiz.acronyms; let index = index;">
+      <div (click)="goTo(index)" class="p-3 mb-2 {{ isAnswered(acronym) == 'Answered'? 'bg-info': 'bg-warning' }}">{{index + 1}}. {{ isAnswered(acronym) }}</div>
+    </div>
+  </div>
+  <div class="result" *ngIf="mode=='result'">
+    <h2>Quiz Result</h2>
+    <div *ngFor="let acronym of quiz.acronyms; let index = index;">
+      <div class="result-question">
+        <h5>{{index + 1}}. {{acronym.acronym}}</h5>
+        <div class="row">
+          <div class="col-6" *ngFor="let option of acronym.options">
+            <input id="{{option.id}}" type="checkbox" disabled="disabled" [(ngModel)]="option.selected" /> {{option.spelledOut}}{{ option.isAnswer ? '   <-- Correct Answer': ''}}
+          </div>
+        </div>
+        <div class="p-1 m-2 alert {{ isCorrect(acronym) == 'correct'? 'alert-success': 'alert-danger'}}">Your answer is {{isCorrect(acronym)}}.</div>
+      </div>
+    </div>
+    <button class="btn btn-warning" (click)="quizAgain()">Another Quiz</button>
+  </div>
+  <hr />
+  <div *ngIf="mode!='result'">
+    <button class="btn btn-warning" (click)="mode = 'quiz'">Quiz</button>
+    <button class="btn btn-info" (click)="mode = 'review'">Review</button>
+    <button class="btn btn-primary" (click)="onSubmit();">Submit Quiz</button>
+  </div>
+</div>

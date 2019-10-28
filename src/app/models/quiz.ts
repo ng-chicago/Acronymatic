@@ -15,7 +15,7 @@ export class Quiz {
             this.description = data.description;
             this.config = new QuizConfig(data.config);
             this.acronyms = [];
-            data.acronym.forEach(q => {
+            data.acronyms.forEach(q => {
                 this.acronyms.push(new Acronym(q));
             });
         }

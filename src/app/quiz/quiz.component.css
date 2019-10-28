@@ -1,0 +1,19 @@
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    /* margin: 15px 0; */
+}
+
+.radio-button {
+    margin: 5px;
+}
+
+.mat-radio-button {
+    padding-right: calc( 10px + (20 - 10) * (100vw - 400px) / (1400 - 400));
+}
+
+ ::ng-deep div.mat-form-field-infix {
+    width: 390px;
+    font-size: 1.25em;
+    font-weight: bold;
+}

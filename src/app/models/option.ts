@@ -1,14 +1,14 @@
 export class Option {
     id: number;
-    acronymId: number;
+    acronymID: string;
     spelledOut: string;
     isAnswer: boolean;
-    selected: boolean;
+    selected?: boolean;
 
     constructor(data: any) {
         data = data || {};
         this.id = data.id;
-        this.acronymId = data.acronymId;
+        this.acronymID = data.acronymID;
         this.spelledOut = data.spelledOut;
         this.isAnswer = data.isAnswer;
     }

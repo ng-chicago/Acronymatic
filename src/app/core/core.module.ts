@@ -5,7 +5,6 @@ import { SharedModule } from '../shared.module';
 import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from '../app-routing.module';
 
-import { SpreadsheetDS } from '../data/spreadsheet-data.service';
 import { HeaderComponent } from './nav/header/header.component';
 import { SearchComponent } from '../search/search.component';
 
@@ -24,8 +23,6 @@ import { SearchComponent } from '../search/search.component';
     AppRoutingModule,
     HeaderComponent
   ],
-  providers: [
-    SpreadsheetDS
-  ]
+  providers: []
 })
 export class CoreModule { }

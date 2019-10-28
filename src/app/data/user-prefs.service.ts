@@ -15,12 +15,12 @@ export class UserPrefsService {
     lsTimesToLearnt = 'ExcludeKnownAcronyms';
 
     constructor() {
-        console.log(this.cName + '.constructor');
+        // console.log(this.cName + '.constructor');
         this.loadData();
     }
 
     loadData() {
-        console.log(this.cName + '.loadData');
+        // console.log(this.cName + '.loadData');
         // use local storage values if available
         let sValue = localStorage[this.lsExcludeKnownAcronyms] || '';
         if (sValue === '') {
