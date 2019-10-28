@@ -61,7 +61,6 @@ export class QuizComponent implements OnInit, OnDestroy {
         this.loadQuiz(this.quizName, this.quizObjName, this.acronymCount, this.optionsCount, this.extraWords1);
       }
     );
-
   }
 
   changeQuiz() {
@@ -74,6 +73,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   quizAgain() {
     this.loadQuiz(this.quizName, this.quizObjName, this.acronymCount, this.optionsCount, this.extraWords1);
     this.mode = 'quiz';
+    window.scrollTo(0, 0);
   }
 
   loadQuiz(quizName: string,
@@ -238,8 +238,11 @@ export class QuizComponent implements OnInit, OnDestroy {
                      whichLetter: string): string {
 
     const letter1 = 'X';
+    const letter2 = '3';
     const specialWord1 = 'eXtended';
     const specialWord2 = 'Exchange';
+    const specialWord3 = 'Triple';
+    const specialWord4 = 'Three';
 
     // letter hard coded random exceptions
     if (whichLetter === letter1) {
@@ -250,8 +253,17 @@ export class QuizComponent implements OnInit, OnDestroy {
         return specialWord2;
       }
     }
+    if (whichLetter === letter2) {
+      if ((Math.random() >= 0.5) && (uniqueWords.includes(specialWord3))) {
+        return specialWord3;
+      } else {
+        return specialWord4;
+      }
+    }
     // made it to here - do regular lookup
     const startsWith = uniqueWords.filter((word) => word.startsWith(whichLetter));
+
+    // TODO check here for startsWith === undefined
     return startsWith[Math.floor(Math.random() * startsWith.length)];
 
   }
@@ -284,6 +296,7 @@ export class QuizComponent implements OnInit, OnDestroy {
     // console.log(acronym);
     // console.log('selectedIndex: ' + selectedIndex);
     // console.log(this.optionChosen);
+    acronym.answered = true;
     if (acronym.acronymTypeId === 1) {
       acronym.options.forEach(
         (x) => {
@@ -291,6 +304,7 @@ export class QuizComponent implements OnInit, OnDestroy {
             x.selected = false;
           } else {
             x.selected = true;
+            acronym.selectedNum = (x.id);
           }
         });
     }
@@ -310,7 +324,6 @@ export class QuizComponent implements OnInit, OnDestroy {
   onSubmit() {
     const answers = [];
     this.quiz.acronyms.forEach(x => answers.push({ quizId: this.quiz.id, questionId: x.acronymID, answered: x.answered }));
-
     // Post your data to the server here. answers contains the questionId and the users' answer.
     // console.log(this.quiz.acronyms);
     this.mode = 'result';
@@ -345,7 +358,7 @@ export class QuizComponent implements OnInit, OnDestroy {
     return {
       allowBack: true,
       allowReview: true,
-      autoMove: false,  // if true, it will move to next acronym automatically when answered.
+      autoMove: true,  // if true, it will move to next acronym automatically when answered.
       duration: 50000,  // indicates the time (in secs) in which quiz needs to be completed. 0 means unlimited.
       pageSize: 1,
       requiredAll: false,  // indicates if you must answer all the acronyms before submitting.

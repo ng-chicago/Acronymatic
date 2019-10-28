@@ -181,11 +181,8 @@ export class SpreadsheetDS {
     // extract unique words
     // this.uniqueWords = Array.from(new Set(tempWordsList));
 
-    // save it in the local cache
+    // save the sorted unique list in local cache
     SpreadsheetDS.setLocal(Array.from(new Set(tempWordsList)).sort(), whichObject + '_Words');
-
-    // console.log('All Words:' + tempWordsList.length);
-    // console.log('Unique Words:' + this.uniqueWords.length);
 
     // TODO: Add extra words for letters where there are few?
   }

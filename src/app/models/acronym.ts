@@ -8,6 +8,7 @@ export class Acronym {
     moreURL: string;
     options: Option[];
     answered: boolean;
+    selectedNum: number;
 
     constructor(data: any) {
         data = data || {};
