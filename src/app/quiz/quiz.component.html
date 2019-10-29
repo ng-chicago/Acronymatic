@@ -54,7 +54,7 @@
           <span *ngIf="acronym.index" class='index' >({{acronym.index}})</span>
         </label>
         <mat-radio-group class="radio-group" [(ngModel)]="acronym.selectedNum" (change)="onSelect2(acronym, pager.index)">
-          <mat-radio-button class="radio-button-results" *ngFor="let option of acronym.options" [value]="option.id" disabled="disabled">{{option.spelledOut}}{{ option.isAnswer ? '   <-- Correct': ''}}</mat-radio-button>
+          <mat-radio-button class="radio-button-results" *ngFor="let option of acronym.options" [value]="option.id" disabled="disabled">{{option.spelledOut}}<span class="correct">{{ option.isAnswer ? '   <-- Correct': ''}}</span></mat-radio-button>
         </mat-radio-group>
         <div class="p-1 m-2 alert {{ isCorrect(acronym) == 'correct'? 'alert-success': 'alert-danger'}}">Your answer is {{isCorrect(acronym)}}</div>
 
