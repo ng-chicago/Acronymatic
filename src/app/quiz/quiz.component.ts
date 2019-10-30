@@ -275,25 +275,8 @@ export class QuizComponent implements OnInit, OnDestroy {
       this.quiz.acronyms.slice(this.pager.index, this.pager.index + this.pager.size) : [];
   }
 
-  // onSelect(acronym: Acronym, option: Option) {
-  //   console.log(this.cName + '.onSelect');
-  //   console.log(acronym);
-  //   console.log(option);
-  //   if (acronym.acronymTypeId === 1) {
-  //     acronym.options.forEach(
-  //       (x) => {
-  //         if (x.id !== option.id) {
-  //           x.selected = false;
-  //         }
-  //       });
-  //   }
-  //   if (this.config.autoMove) {
-  //     this.goTo(this.pager.index + 1);
-  //   }
-  // }
-
-  onSelect2(acronym: Acronym, selectedIndex: number) {
-    // console.log(this.cName + '.onSelect2: ');
+  onSelect(acronym: Acronym, selectedIndex: number) {
+    // console.log(this.cName + '.onSelect: ');
     // console.log(acronym);
     // console.log('selectedIndex: ' + selectedIndex);
     // console.log(this.optionChosen);
@@ -333,7 +316,6 @@ export class QuizComponent implements OnInit, OnDestroy {
   }
 
   sumAndSaveResults() {
-    // TODO - figure out a running total of how often each acronym was correct
 
     let correctCount = 0;
     const acronymCount = this.quiz.acronyms.length;
@@ -346,6 +328,7 @@ export class QuizComponent implements OnInit, OnDestroy {
         const selectedNum = one.selectedNum;
         if (one.options[selectedNum - 1].isAnswer) {
           correctCount++;
+          // TODO - figure out a running total of correct acronyms
         }
       }
     }
