@@ -43,7 +43,7 @@
     </mat-card-content>
 
     <mat-card-content class="result" *ngIf="mode=='result'">
-      <h2>Quiz Result</h2>
+      <h2>Quiz Result{{correctCount}}</h2>
       <div *ngFor="let acronym of quiz.acronyms; let index = index;">
 
         <label id="radio-group-label" class="theAcronym">

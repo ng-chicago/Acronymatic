@@ -21,6 +21,7 @@ export class QuizComponent implements OnInit, OnDestroy {
 
   quizObjName: string;
   quizName: string;
+  correctCount: string;
   extraWords1: string;
   mode = 'quiz';
   quizes: any[];
@@ -326,7 +327,30 @@ export class QuizComponent implements OnInit, OnDestroy {
     this.quiz.acronyms.forEach(x => answers.push({ quizId: this.quiz.id, questionId: x.acronymID, answered: x.answered }));
     // Post your data to the server here. answers contains the questionId and the users' answer.
     // console.log(this.quiz.acronyms);
+    this.sumAndSaveResults();
     this.mode = 'result';
+
+  }
+
+  sumAndSaveResults() {
+    // TODO - figure out a running total of how often each acronym was correct
+
+    let correctCount = 0;
+    const acronymCount = this.quiz.acronyms.length;
+    this.correctCount = '';
+    // console.log(this.quiz.acronyms);
+
+    for (const one of this.quiz.acronyms) {
+      // console.log(one.options);
+      if (one.answered) {
+        const selectedNum = one.selectedNum;
+        if (one.options[selectedNum - 1].isAnswer) {
+          correctCount++;
+        }
+      }
+    }
+    this.correctCount = ' (' + correctCount + ' of ' + acronymCount + ' correct)';
+
   }
 
   isAnswered(acronym: Acronym) {
