@@ -1,9 +1,28 @@
 {
     "cSpell.words": [
+        "Acronymatic",
+        "Eleventy",
+        "Netlify",
+        "Paginator",
         "ellapsed",
         "moreurl",
         "prefs",
         "quizes",
         "spelledout"
-    ]
+    ],
+    "editor.fontFamily": "Fira Code",
+    "editor.fontLigatures": true,
+    "editor.fontSize": 18,
+    "editor.renderWhitespace": "all",
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.colorTheme": "Cobalt2",
+    "workbench.colorCustomizations": {
+        "statusBar.background": "#0059ffa4",
+        "[Cobalt2]": {
+          "tab.activeBackground": "#077bf73e",
+          "tab.activeBorder": "#fffb0050",
+          "gitDecoration.ignoredResourceForeground": "#706e6e"
+        }
+    },
+    "breadcrumbs.enabled": true,
 }
